@@ -13,8 +13,13 @@ func aboutPage(w http.ResponseWriter, r *http.Request) {
 	http.ServeFile(w, r, "static/about.html")
 }
 
+
+
+
+
 func contactPage(w http.ResponseWriter, r *http.Request) {
-	http.ServeFile(w, r, "static/contact.html")
+	http.ServeFile(w,  r, "static/contact.html")
+	
 }
 
 func main() {
