@@ -49,6 +49,6 @@ jobs:
       with:
         context: .
         push: true
-        tags: ${{ secrets.DOCKERHUB_USERNAME }}/go_webapp:latest
+        tags: ${{ secrets.DOCKERHUB_USERNAME }}/go_webapp:latest,${{ secrets.DOCKERHUB_USERNAME }}/go_webapp:${{ github.sha }}
         cache-from: type=gha
         cache-to: type=gha,mode=max 
