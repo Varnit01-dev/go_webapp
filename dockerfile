@@ -1,26 +1,31 @@
 FROM golang:1.22 as base 
 
-WORKDIR /the/workdir/path
+WORKDIR /app
 
-COPY go.mod .
+# Copy go mod and sum files
+COPY go.mod ./
 
-RUN go mod download 
+# Download all dependencies
+RUN go mod download
 
+# Copy the source code
 COPY . .
 
-RUN go build -o main .
+# Build the application
+RUN CGO_ENABLED=0 GOOS=linux go build -o main .
 
 #FINAL  STAGE -Distroless image
-FROM gcr.io/Distroless
+FROM gcr.io/distroless/static-debian11
 
-COPY --from=base /app/main /
+WORKDIR /app
 
-COPY --from=base /app/static/ ./static
+# Copy the binary and static files
+COPY --from=base /app/main /app/main
+COPY --from=base /app/static /app/static
 
 EXPOSE 8080
 
-CMD [ "./main" ]
-
+CMD ["/app/main"]
 
 
 
